@@ -1,1 +1,10 @@
 F:\school\NeuralNetProject\NeuralNetProject\bin\Debug\NeuralNetProject.exe.config
+F:\school\NeuralNetProject\NeuralNetProject\bin\Debug\NeuralNetProject.exe
+F:\school\NeuralNetProject\NeuralNetProject\bin\Debug\NeuralNetProject.pdb
+F:\school\NeuralNetProject\NeuralNetProject\obj\Debug\NeuralNetProject.csprojResolveAssemblyReference.cache
+F:\school\NeuralNetProject\NeuralNetProject\obj\Debug\NeuralNetProject.Form1.resources
+F:\school\NeuralNetProject\NeuralNetProject\obj\Debug\NeuralNetProject.Properties.Resources.resources
+F:\school\NeuralNetProject\NeuralNetProject\obj\Debug\NeuralNetProject.csproj.GenerateResource.Cache
+F:\school\NeuralNetProject\NeuralNetProject\obj\Debug\NeuralNetProject.exe
+F:\school\NeuralNetProject\NeuralNetProject\obj\Debug\NeuralNetProject.pdb
+F:\school\NeuralNetProject\NeuralNetProject\obj\Debug\NeuralNetProject.NewForm.resources

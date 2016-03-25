@@ -12,9 +12,30 @@ namespace NeuralNetProject
 {
     public partial class Form1 : Form
     {
+        private NNet currentNet;        
+
         public Form1()
         {
             InitializeComponent();
+        }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            NewForm creator = new NewForm();
+            creator.Show();
+        }
+
+        internal NNet CurrentNet
+        {
+            get
+            {
+                return currentNet;
+            }
+
+            set
+            {
+                currentNet = value;
+            }
         }
     }
 }
