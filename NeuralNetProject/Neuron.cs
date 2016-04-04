@@ -41,15 +41,19 @@ namespace NeuralNetProject
             }
         }
 
-        public void mutateWeights(int amount) {
+        public void mutateWeights(double amount) {
             double mutation;
             for (int i=0; i<inputWeights.Length; i++) {
-                mutation = amount - amount / 2;
-                mutation = rand.Next(0,amount);
+                mutation = amount - amount / 2;                
+                mutation = rand.Next(0,(int)amount);
                 mutation -= amount / 2;
                 mutation /= 100;
-                inputWeights[i] += amount;
+                inputWeights[i] += mutation;
             }
+        }
+
+        public double[] getWeights() {
+            return inputWeights;
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -51,11 +52,42 @@ namespace NeuralNetProject
         }
 
         public void refreshImage() {
+            Point[] inputPoints = new Point[currentNet.InputWidth];
+            int horiSpacing = 45;
+            int vertSpacing = 100;
             g.Clear(Color.White);
             p = new Pen(Color.Black);
+            int centeringOffset = currentNet.InputWidth * horiSpacing / 2;
             for (int i=0; i<CurrentNet.InputWidth; i++) {
+                r.X = pictureBox1.Width/2 - centeringOffset + i * horiSpacing;
+                inputPoints[i] = new Point(r.X+10,r.Y+10);
                 g.DrawEllipse(p, r);
             }
+
+            centeringOffset = currentNet.rowWidth * horiSpacing / 2;
+            for (int y=0; y<currentNet.amountOfRows; y++) {
+                for (int x=0; x<currentNet.rowWidth; x++) {
+                    r.Y = vertSpacing * (y+1);
+                    r.X = pictureBox1.Width / 2 - centeringOffset + x * horiSpacing;
+                    g.DrawEllipse(p, r);
+
+                    double[] currentWeights = currentNet.hiddenNeurons[x, y].getWeights();
+                    for (int i=0; i<inputPoints.Length; i++) {
+                        p.Width = (float)currentWeights[i];
+                        Debug.WriteLine(currentWeights[i]);
+                        g.DrawLine(p, inputPoints[i], new Point(r.X+10, r.Y+10));
+                        p.Width = 1;
+                    }
+                }
+            }
+
+            centeringOffset = currentNet.outputs * horiSpacing / 2;
+            r.Y = vertSpacing * (currentNet.amountOfRows + 1);
+            for (int i=0; i<currentNet.outputs; i++) {                
+                r.X = pictureBox1.Width / 2 - centeringOffset + i * horiSpacing;
+                g.DrawEllipse(p, r);
+            }
+
             pictureBox1.Image = netDisplay;
         }
     }

@@ -9,17 +9,17 @@ namespace NeuralNetProject
 {
     class NNet
     {
-        private int inputWidth, amountOfRows, rowWidth;
+        public int inputWidth, amountOfRows, rowWidth;
         private double weightRange, weightAvg;
-        private int inputs;
+        public int outputs=6;
         private double[,] weights;
-
-        private double[][] w;
         
+        private double[][] w;
+        Neuron[] inputNeurons;
+        public Neuron[,] hiddenNeurons;
+        public Neuron[] outputNeurons; 
 
         public NNet() {
-            w = new double[5][];
-            w[4] = new double[5];
         }
 
         /// <summary>
@@ -35,16 +35,57 @@ namespace NeuralNetProject
             this.rowWidth = rowWidth;
             this.weightRange = weightRange;
             this.weightAvg = weightAvg;
-
-            weights = new double[rowWidth, amountOfRows];
-        }
-
-        public void initializeNet() {
             
         }
 
-        public void randomizeNet() {
+        public void initializeNet() {
+            inputNeurons = new Neuron[inputWidth];
+            for (int i=0; i<inputNeurons.Length; i++) {
+                inputNeurons[i] = new Neuron();
+            }
 
+            hiddenNeurons = new Neuron[rowWidth,amountOfRows];
+            Neuron[] temp;
+            for (int y=0; y<amountOfRows; y++) {
+                for (int x=0; x<rowWidth; x++) {
+                    if (y == 0) {
+                        hiddenNeurons[x, y] = new Neuron(inputNeurons);
+                        hiddenNeurons[x, y].initializeWeights(weightAvg);
+                    } else {
+                        temp = new Neuron[hiddenNeurons.GetLength(0)];
+                        for (int i=0; i<temp.Length; i++) {
+                            temp[i] = hiddenNeurons[i,y-1];
+                        }
+                        hiddenNeurons[x, y] = new Neuron(temp);
+                        hiddenNeurons[x, y].initializeWeights(weightAvg);
+                    }
+                }
+            }
+
+            outputNeurons = new Neuron[6];
+            temp = new Neuron[hiddenNeurons.GetLength(0)];
+            for (int i = 0; i < temp.Length; i++)
+            {
+                temp[i] = hiddenNeurons[i, hiddenNeurons.GetLength(1)-1];
+            }
+            for (int i=0; i<outputs; i++) {
+                outputNeurons[i] = new Neuron(temp);
+                outputNeurons[i].initializeWeights(weightAvg);
+            }
+
+        }
+
+        public void randomizeNet(int randomAmount) {
+            for (int y = 0; y < amountOfRows; y++)
+            {
+                for (int x = 0; x < rowWidth; x++)
+                {
+                    hiddenNeurons[x, y].mutateWeights(randomAmount);
+                }
+            }
+            for (int i=0; i<outputs; i++) {
+                outputNeurons[i].mutateWeights(randomAmount);
+            }
         }
 
         public int InputWidth
@@ -99,8 +140,17 @@ namespace NeuralNetProject
             }
         }
 
-        public void mutateNet() {
+        public void setWeights(int row, double[] weights) {
 
+        }
+
+        //int inputs, int rows, int rowWidth, double weightRange, double weightAvg
+        public NNet mutateNet() {
+            NNet outputNet = new NNet();
+            outputNet.inputWidth = inputWidth;
+            
+
+            return outputNet;
         }
     }
 }

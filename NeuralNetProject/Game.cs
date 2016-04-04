@@ -20,13 +20,16 @@ namespace NeuralNetProject
             timer.Tick += new EventHandler(timerEvent);
 
             smileys = new Smiley[4];
+            
             smileys[0] = new Smiley(net, new Point(1,1));
             smileys[1] = new Smiley(net, new Point(1, 15));
             smileys[2] = new Smiley(net, new Point(9, 1));
             smileys[3] = new Smiley(net, new Point(9, 15));
-
+            
             gameform = new GameForm();
-            gameform.smileys = smileys;            
+            for (int i=0; i<smileys.Length; i++) {
+                gameform.updateSmileyPoint(i, smileys[i].position);
+            }
             gameform.Show();
             gameform.refreshImage();
             timer.Start();

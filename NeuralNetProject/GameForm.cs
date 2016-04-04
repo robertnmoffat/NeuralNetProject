@@ -17,7 +17,7 @@ namespace NeuralNetProject
         Bitmap smiley, breakable, solid, ground, horiExp, vertExp, expLeft, expRight, expUp, expDown;
         public Bitmap currentTile;
         Point[] smileyPositions = {new Point(1,1),new Point(1,9), new Point(15,1), new Point(15,9) };
-        public Smiley[] smileys;
+        
         int[,] map = { { 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 }, 
                         {1,0,0,2,2,2,2,2,2,2,2,2,2,2,0,0,1},
                         {1,0,1,2,1,2,1,2,1,2,1,2,1,2,1,0,1},
@@ -48,8 +48,8 @@ namespace NeuralNetProject
                 for (int x=0; x<map.GetLength(0); x++) {
                     currentTile = translateMapTile(map[x,y]);
 
-                    for (int i = 0; i < smileys.Length; i++) {
-                        if (smileys[i].position.X == y && smileys[i].position.Y == x)
+                    for (int i = 0; i < smileyPositions.Length; i++) {
+                        if (smileyPositions[i].X == y && smileyPositions[i].Y == x)
                             currentTile = smiley;
                     }
 
@@ -72,6 +72,16 @@ namespace NeuralNetProject
                 default:
                     return ground;
             }
-        }  
+        }
+
+        /// <summary>
+        /// Update smileys position
+        /// </summary>
+        /// <param name="which"></param>
+        /// <param name="position"></param>
+        public void updateSmileyPoint(int which, Point position) {
+            smileyPositions[which].X = position.X;
+            smileyPositions[which].Y = position.Y;
+        }
     }
 }

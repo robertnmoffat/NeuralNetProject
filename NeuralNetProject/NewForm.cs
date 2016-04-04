@@ -58,6 +58,8 @@ namespace NeuralNetProject
             double weightRange = (double)numericUpDown4.Value;
             double weightAvg = (double)numericUpDown5.Value;
             parent.CurrentNet = new NNet(inputs,rows,rowWidth,weightRange,weightAvg);
+            parent.CurrentNet.initializeNet();
+            parent.CurrentNet.randomizeNet((int)(weightRange*100));
             parent.refreshImage();
             this.Dispose();
         }
