@@ -12,7 +12,7 @@ namespace NeuralNetProject
     {
         Timer timer;
         GameForm gameform;
-         Smiley[] smileys;
+        public Smiley[] smileys;
 
         public Game(NNet net, Form1 form1) {
             timer = new Timer();
@@ -26,13 +26,13 @@ namespace NeuralNetProject
             smileys[3] = new Smiley(net, new Point(9, 15));
 
             gameform = new GameForm();
-            
+            gameform.smileys = smileys;            
             gameform.Show();
             gameform.refreshImage();
             timer.Start();
         }
 
-        protected void timerEvent(object sender, EventArgs eArgs)
+        public void timerEvent(object sender, EventArgs eArgs)
         {
             if (sender == timer)
             {

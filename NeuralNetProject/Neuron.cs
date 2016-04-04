@@ -10,16 +10,17 @@ namespace NeuralNetProject
     {
         Neuron[] inputs;
         double[] inputWeights;
-        double currentSum;
+        public double currentSum;
         Random rand = new Random();
 
         //Use empty constructor for input neurons
         public Neuron() {
+
         }
 
         public Neuron(Neuron[] inputs) {
             this.inputs = inputs;
-
+            inputWeights = new double[inputs.Length];
         }
 
         public void sum() {
