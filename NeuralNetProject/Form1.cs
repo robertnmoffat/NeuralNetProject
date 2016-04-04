@@ -52,7 +52,7 @@ namespace NeuralNetProject
         }
 
         public void refreshImage() {
-            Point[] inputPoints = new Point[currentNet.InputWidth];
+            Point[,] inputPoints = new Point[currentNet.InputWidth,currentNet.amountOfRows+1];
             int horiSpacing = 45;
             int vertSpacing = 100;
             g.Clear(Color.White);
@@ -60,7 +60,7 @@ namespace NeuralNetProject
             int centeringOffset = currentNet.InputWidth * horiSpacing / 2;
             for (int i=0; i<CurrentNet.InputWidth; i++) {
                 r.X = pictureBox1.Width/2 - centeringOffset + i * horiSpacing;
-                inputPoints[i] = new Point(r.X+10,r.Y+10);
+                inputPoints[i,0] = new Point(r.X+10,r.Y+10);
                 g.DrawEllipse(p, r);
             }
 
@@ -73,9 +73,9 @@ namespace NeuralNetProject
 
                     double[] currentWeights = currentNet.hiddenNeurons[x, y].getWeights();
                     for (int i=0; i<inputPoints.Length; i++) {
-                        p.Width = (float)currentWeights[i];
+                        p.Width = (float)currentWeights[i]+1;
                         Debug.WriteLine(currentWeights[i]);
-                        g.DrawLine(p, inputPoints[i], new Point(r.X+10, r.Y+10));
+                        g.DrawLine(p, inputPoints[i,y+1], new Point(r.X+10, r.Y+10));
                         p.Width = 1;
                     }
                 }
