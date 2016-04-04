@@ -12,8 +12,11 @@ namespace NeuralNetProject
 {
     public partial class NewForm : Form
     {
-        public NewForm()
+        Form1 parent;
+
+        public NewForm(Form1 parent)
         {
+            this.parent = parent;
             InitializeComponent();
         }
 
@@ -53,7 +56,10 @@ namespace NeuralNetProject
             int rows = (int)numericUpDown2.Value;
             int rowWidth = (int)numericUpDown3.Value;
             double weightRange = (double)numericUpDown4.Value;
-            double weightAvg = ()
+            double weightAvg = (double)numericUpDown5.Value;
+            parent.CurrentNet = new NNet(inputs,rows,rowWidth,weightRange,weightAvg);
+            parent.refreshImage();
+            this.Dispose();
         }
     }
 }

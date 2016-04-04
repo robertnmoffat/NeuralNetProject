@@ -8,3 +8,4 @@ F:\school\NeuralNetProject\NeuralNetProject\obj\Debug\NeuralNetProject.csproj.Ge
 F:\school\NeuralNetProject\NeuralNetProject\obj\Debug\NeuralNetProject.exe
 F:\school\NeuralNetProject\NeuralNetProject\obj\Debug\NeuralNetProject.pdb
 F:\school\NeuralNetProject\NeuralNetProject\obj\Debug\NeuralNetProject.NewForm.resources
+F:\school\NeuralNetProject\NeuralNetProject\obj\Debug\NeuralNetProject.GameForm.resources
