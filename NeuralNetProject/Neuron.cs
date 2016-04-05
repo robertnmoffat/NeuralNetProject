@@ -11,7 +11,6 @@ namespace NeuralNetProject
         Neuron[] inputs;
         double[] inputWeights;
         public double currentSum;
-        Random rand = new Random();
 
         //Use empty constructor for input neurons
         public Neuron() {
@@ -26,16 +25,20 @@ namespace NeuralNetProject
         public void sum() {
             currentSum = 0.0;
             for (int i=0; i<inputWeights.Length; i++) {
-                currentSum += inputs[i].currentSum * inputWeights[i];
-            }
+                currentSum += inputs[i].getSigmoidOutput() * inputWeights[i];
+            }            
+        }
+
+        public void sigmoidSetCurrentSum(double input) {
+            currentSum = 1 / (1 + Math.Pow(Math.E, -1 * input)); ;
         }
 
         public double getSigmoidOutput() {
+            //return currentSum;
             return 1 / (1 + Math.Pow(Math.E, -1 * currentSum));
         }
-
-        public void initializeWeights(double avg)
-        {
+        
+        public void initializeWeights(double avg){
             for (int i = 0; i < inputWeights.Length; i++){
                 inputWeights[i] = avg;
             }
@@ -45,7 +48,7 @@ namespace NeuralNetProject
             double mutation;
             for (int i=0; i<inputWeights.Length; i++) {
                 mutation = amount - amount / 2;                
-                mutation = rand.Next(0,(int)amount);
+                mutation = Game.rand.Next(0,(int)amount);
                 mutation -= amount / 2;
                 mutation /= 100;
                 inputWeights[i] += mutation;

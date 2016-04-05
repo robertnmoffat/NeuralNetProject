@@ -11,7 +11,7 @@ namespace NeuralNetProject
     {
         public Point position;
         bool alive;
-        NNet net;
+        public NNet net;
 
         public Smiley(NNet net, Point position) {
             this.net = net;
@@ -40,6 +40,10 @@ namespace NeuralNetProject
                     position.X++;
                     break;
             }
+        }
+
+        public void giveNegativeFeedback() {
+
         }
     }
 }

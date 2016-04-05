@@ -52,7 +52,8 @@ namespace NeuralNetProject
         }
 
         public void refreshImage() {
-            Point[,] inputPoints = new Point[currentNet.InputWidth,currentNet.amountOfRows+1];
+            Point[] inputPoints = new Point[currentNet.InputWidth];
+            Point[,] hiddenInputPoints = new Point[currentNet.rowWidth, currentNet.amountOfRows];
             int horiSpacing = 45;
             int vertSpacing = 100;
             g.Clear(Color.White);
@@ -60,7 +61,7 @@ namespace NeuralNetProject
             int centeringOffset = currentNet.InputWidth * horiSpacing / 2;
             for (int i=0; i<CurrentNet.InputWidth; i++) {
                 r.X = pictureBox1.Width/2 - centeringOffset + i * horiSpacing;
-                inputPoints[i,0] = new Point(r.X+10,r.Y+10);
+                inputPoints[i] = new Point(r.X+10,r.Y+10);
                 g.DrawEllipse(p, r);
             }
 
@@ -69,13 +70,15 @@ namespace NeuralNetProject
                 for (int x=0; x<currentNet.rowWidth; x++) {
                     r.Y = vertSpacing * (y+1);
                     r.X = pictureBox1.Width / 2 - centeringOffset + x * horiSpacing;
+                    hiddenInputPoints[x, y] = new Point(r.X + 10, r.Y + 10);
                     g.DrawEllipse(p, r);
 
                     double[] currentWeights = currentNet.hiddenNeurons[x, y].getWeights();
                     for (int i=0; i<inputPoints.Length; i++) {
                         p.Width = (float)currentWeights[i]+1;
+                        //int darkness = (int)Math.Abs(255/Math.Round(currentWeights[i] * 100));
                         Debug.WriteLine(currentWeights[i]);
-                        g.DrawLine(p, inputPoints[i,y+1], new Point(r.X+10, r.Y+10));
+                        g.DrawLine(p, inputPoints[i], new Point(r.X+10, r.Y+10));
                         p.Width = 1;
                     }
                 }
@@ -86,6 +89,16 @@ namespace NeuralNetProject
             for (int i=0; i<currentNet.outputs; i++) {                
                 r.X = pictureBox1.Width / 2 - centeringOffset + i * horiSpacing;
                 g.DrawEllipse(p, r);
+
+                double[] currentWeights = currentNet.outputNeurons[i].getWeights();
+                for (int j = 0; j < currentNet.rowWidth; j++)
+                {
+                    p.Width = (float)currentWeights[j] + 1;
+                    //int darkness = (int)Math.Abs(255/Math.Round(currentWeights[i] * 100));
+                    Debug.WriteLine(currentWeights[j]);
+                    g.DrawLine(p, hiddenInputPoints[j, currentNet.amountOfRows-1], new Point(r.X + 10, r.Y + 10));
+                    p.Width = 1;
+                }
             }
 
             pictureBox1.Image = netDisplay;

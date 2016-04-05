@@ -140,17 +140,78 @@ namespace NeuralNetProject
             }
         }
 
-        public void setWeights(int row, double[] weights) {
-
+        public void setWeights(double[] weights) {
+            //-------------------TODO--------------------------
         }
 
         //int inputs, int rows, int rowWidth, double weightRange, double weightAvg
-        public NNet mutateNet() {
-            NNet outputNet = new NNet();
-            outputNet.inputWidth = inputWidth;
-            
+        public NNet copyNet() {
+            NNet outputNet = new NNet(inputWidth,amountOfRows,rowWidth,WeightRange,weightAvg);
+            double[] allWeights = new double[inputWidth*rowWidth+rowWidth*(amountOfRows-1)+outputs*rowWidth];
+            double[] tempWeights;
+            int pos = 0;
+
+            for(int i = 0; i < amountOfRows; i++){
+                for (int j=0; j<rowWidth; j++) {
+                    tempWeights = hiddenNeurons[i, j].getWeights();
+
+                    for (int k=0; k<tempWeights.Length; k++) {
+                        allWeights[pos++] = tempWeights[k];
+                    }
+                }
+            }
+
+            for (int i = 0; i < outputs; i++) {
+                tempWeights = outputNeurons[i].getWeights();
+                for (int j=0; j<tempWeights.Length; j++) {
+                    allWeights[pos++] = tempWeights[j];
+                }
+            }
+
+            outputNet.setWeights(allWeights);
+            //--------------TODO-----------------------------------------------
 
             return outputNet;
+        }
+
+        public void setInputs(double[] inputValues) {
+            for (int i=0; i<inputNeurons.Length; i++) {
+                inputNeurons[i].currentSum = inputValues[i];
+            }
+        }
+
+        public void runNet() {
+            for (int y=0; y<hiddenNeurons.GetLength(1); y++) {
+                for (int x=0; x<hiddenNeurons.GetLength(0); x++) {
+                    hiddenNeurons[x, y].sum();
+                }
+            }
+            for (int i=0; i<outputNeurons.Length; i++) {
+                outputNeurons[i].sum();
+            }
+        }
+
+        public double[] getOutputs() {
+            double[] output = new double[outputs];
+            for (int i = 0; i < outputs; i++){
+                output[i] = outputNeurons[i].getSigmoidOutput();
+            }
+            return output;
+        }
+
+        public int getAction() {
+            double[] outputValues = getOutputs();
+            double highestValue = -999999;
+            int highestPos = -1;
+
+            for (int i=0; i<outputValues.Length; i++) {
+                if (outputValues[i] > highestValue) {
+                    highestValue = outputValues[i];
+                    highestPos = i;
+                }
+            }
+
+            return highestPos;
         }
     }
 }

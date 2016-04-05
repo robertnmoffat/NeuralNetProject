@@ -18,20 +18,11 @@ namespace NeuralNetProject
         public Bitmap currentTile;
         Point[] smileyPositions = {new Point(1,1),new Point(1,9), new Point(15,1), new Point(15,9) };
         
-        int[,] map = { { 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 }, 
-                        {1,0,0,2,2,2,2,2,2,2,2,2,2,2,0,0,1},
-                        {1,0,1,2,1,2,1,2,1,2,1,2,1,2,1,0,1},
-                        {1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1},
-                        {1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1},
-                        {1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1},
-                        {1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1},
-                        {1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1},
-                        {1,0,1,2,1,2,1,2,1,2,1,2,1,2,1,0,1},
-                        {1,0,0,2,2,2,2,2,2,2,2,2,2,2,0,0,1},
-                        {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},};
+        int[,] map;
 
-        public GameForm()
+        public GameForm(int[,] map)
         {
+            this.map = map;
             solid = (Bitmap)Image.FromFile("solid.bmp");
             ground = (Bitmap)Image.FromFile("ground.bmp");
             breakable = (Bitmap)Image.FromFile("breakable.bmp");
@@ -49,7 +40,7 @@ namespace NeuralNetProject
                     currentTile = translateMapTile(map[x,y]);
 
                     for (int i = 0; i < smileyPositions.Length; i++) {
-                        if (smileyPositions[i].X == y && smileyPositions[i].Y == x)
+                        if (smileyPositions[i].Y == x && smileyPositions[i].X == y)
                             currentTile = smiley;
                     }
 
