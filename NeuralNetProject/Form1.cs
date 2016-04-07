@@ -84,9 +84,9 @@ namespace NeuralNetProject
                 }
             }
 
-            centeringOffset = currentNet.outputs * horiSpacing / 2;
+            centeringOffset = currentNet.outputCount * horiSpacing / 2;
             r.Y = vertSpacing * (currentNet.amountOfRows + 1);
-            for (int i=0; i<currentNet.outputs; i++) {                
+            for (int i=0; i<currentNet.outputCount; i++) {                
                 r.X = pictureBox1.Width / 2 - centeringOffset + i * horiSpacing;
                 g.DrawEllipse(p, r);
 
@@ -102,6 +102,15 @@ namespace NeuralNetProject
             }
 
             pictureBox1.Image = netDisplay;
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            NNet net = currentNet.copyNet();
+            net.randomizeNet((int)(net.weightRange*100));
+            currentNet = net;
+            refreshImage();
+            game.setSmileyNet(0, currentNet);
         }
     }
 }

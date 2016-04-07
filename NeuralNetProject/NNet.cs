@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -10,9 +11,10 @@ namespace NeuralNetProject
     class NNet
     {
         public int inputWidth, amountOfRows, rowWidth;
-        private double weightRange, weightAvg;
-        public int outputs=6;
+        public double weightRange, weightAvg;
+        
         private double[,] weights;
+        public int outputCount = 6;      
         
         private double[][] w;
         Neuron[] inputNeurons;
@@ -62,20 +64,20 @@ namespace NeuralNetProject
                 }
             }
 
-            outputNeurons = new Neuron[6];
+            outputNeurons = new Neuron[outputCount];
             temp = new Neuron[hiddenNeurons.GetLength(0)];
             for (int i = 0; i < temp.Length; i++)
             {
                 temp[i] = hiddenNeurons[i, hiddenNeurons.GetLength(1)-1];
             }
-            for (int i=0; i<outputs; i++) {
+            for (int i=0; i<outputCount; i++) {
                 outputNeurons[i] = new Neuron(temp);
                 outputNeurons[i].initializeWeights(weightAvg);
             }
 
         }
 
-        public void randomizeNet(int randomAmount) {
+        public NNet randomizeNet(int randomAmount) {
             for (int y = 0; y < amountOfRows; y++)
             {
                 for (int x = 0; x < rowWidth; x++)
@@ -83,9 +85,11 @@ namespace NeuralNetProject
                     hiddenNeurons[x, y].mutateWeights(randomAmount);
                 }
             }
-            for (int i=0; i<outputs; i++) {
+            for (int i=0; i<outputCount; i++) {
                 outputNeurons[i].mutateWeights(randomAmount);
             }
+
+            return this;
         }
 
         public int InputWidth
@@ -141,36 +145,56 @@ namespace NeuralNetProject
         }
 
         public void setWeights(double[] weights) {
-            //-------------------TODO--------------------------
+            int pos = 0;
+            for (int y=0; y<hiddenNeurons.GetLength(1); y++) {
+                for (int x=0; x<hiddenNeurons.GetLength(0); x++) {
+                    for (int i=0; i<hiddenNeurons[x,y].inputWeights.Length; i++) {
+                        hiddenNeurons[x, y].inputWeights[i] = weights[pos++];
+                    }
+                    hiddenNeurons[x, y].threshold = weights[pos++];
+                }                
+            }
+
+            for (int i=0; i<outputCount; i++) {
+                for (int j=0; j<outputNeurons[i].inputWeights.Length; j++) {
+                    outputNeurons[i].inputWeights[j] = weights[pos++];
+                }
+                outputNeurons[i].threshold = weights[pos++];
+            }
+            
         }
 
         //int inputs, int rows, int rowWidth, double weightRange, double weightAvg
+        //hiddenWeights,threshold,hiddenWeights,threshold... outputWeights,threshold
         public NNet copyNet() {
             NNet outputNet = new NNet(inputWidth,amountOfRows,rowWidth,WeightRange,weightAvg);
-            double[] allWeights = new double[inputWidth*rowWidth+rowWidth*(amountOfRows-1)+outputs*rowWidth];
+            outputNet.initializeNet();
+            double[] allWeights = new double[(inputWidth+1)*rowWidth+(rowWidth+1)*(amountOfRows-1)+(outputCount+1)*rowWidth];
             double[] tempWeights;
             int pos = 0;
 
             for(int i = 0; i < amountOfRows; i++){
                 for (int j=0; j<rowWidth; j++) {
-                    tempWeights = hiddenNeurons[i, j].getWeights();
+                    tempWeights = hiddenNeurons[j, i].getWeights();
 
                     for (int k=0; k<tempWeights.Length; k++) {
                         allWeights[pos++] = tempWeights[k];
                     }
+                    allWeights[pos++] = hiddenNeurons[j,i].threshold;
                 }
             }
+            
 
-            for (int i = 0; i < outputs; i++) {
+            for (int i = 0; i < outputCount; i++) {
                 tempWeights = outputNeurons[i].getWeights();
                 for (int j=0; j<tempWeights.Length; j++) {
                     allWeights[pos++] = tempWeights[j];
                 }
+                allWeights[pos++] = outputNeurons[i].threshold;
             }
 
             outputNet.setWeights(allWeights);
-            //--------------TODO-----------------------------------------------
-
+            
             return outputNet;
         }
 
@@ -184,6 +208,11 @@ namespace NeuralNetProject
             for (int y=0; y<hiddenNeurons.GetLength(1); y++) {
                 for (int x=0; x<hiddenNeurons.GetLength(0); x++) {
                     hiddenNeurons[x, y].sum();
+                    if (hiddenNeurons[x, y].currentSum > 0)
+                        hiddenNeurons[x, y].currentSum = 1;
+                    else
+                        hiddenNeurons[x, y].currentSum = 0;
+
                 }
             }
             for (int i=0; i<outputNeurons.Length; i++) {
@@ -192,8 +221,8 @@ namespace NeuralNetProject
         }
 
         public double[] getOutputs() {
-            double[] output = new double[outputs];
-            for (int i = 0; i < outputs; i++){
+            double[] output = new double[outputCount];
+            for (int i = 0; i < outputCount; i++){
                 output[i] = outputNeurons[i].getSigmoidOutput();
             }
             return output;

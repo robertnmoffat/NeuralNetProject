@@ -71,20 +71,21 @@
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.newToolStripMenuItem.Text = "&New";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.saveToolStripMenuItem.Text = "&Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.openToolStripMenuItem.Text = "&Open";
             // 
             // gameToolStripMenuItem
@@ -98,7 +99,7 @@
             // bomberDudeToolStripMenuItem
             // 
             this.bomberDudeToolStripMenuItem.Name = "bomberDudeToolStripMenuItem";
-            this.bomberDudeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.bomberDudeToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.bomberDudeToolStripMenuItem.Text = "BomberDude";
             this.bomberDudeToolStripMenuItem.Click += new System.EventHandler(this.bomberDudeToolStripMenuItem_Click);
             // 

@@ -12,6 +12,7 @@ namespace NeuralNetProject
         public Point position;
         bool alive;
         public NNet net;
+        double[] memFlags = new double[4];
 
         public Smiley(NNet net, Point position) {
             this.net = net;
@@ -27,16 +28,16 @@ namespace NeuralNetProject
         {
             switch (direction)
             {
-                case 1:
+                case 0:
                     position.Y++;
                     break;
-                case 2:
+                case 1:
                     position.Y--;
                     break;
-                case 3:
+                case 2:
                     position.X--;
                     break;
-                case 4:
+                case 3:
                     position.X++;
                     break;
             }

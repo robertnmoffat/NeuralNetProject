@@ -14,7 +14,29 @@ namespace NeuralNetProject
     {
         Graphics g;
         Bitmap canvas = new Bitmap(722,482);
-        Bitmap smiley, breakable, solid, ground, horiExp, vertExp, expLeft, expRight, expUp, expDown;
+        Bitmap smiley, breakable, solid, ground, horiExp, vertExp, expLeft, expRight, expUp, expDown, bombLeft, bombRight;
+        public int bestOffspring = -1;
+
+        private void toolStripMenuItem4_Click(object sender, EventArgs e)
+        {
+            bestOffspring = 2;
+        }
+
+        private void toolStripMenuItem5_Click(object sender, EventArgs e)
+        {
+            bestOffspring = 3;
+        }
+
+        private void toolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            bestOffspring = 1;
+        }
+
+        private void toolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            bestOffspring = 0;
+        }
+
         public Bitmap currentTile;
         Point[] smileyPositions = {new Point(1,1),new Point(1,9), new Point(15,1), new Point(15,9) };
         
@@ -27,6 +49,8 @@ namespace NeuralNetProject
             ground = (Bitmap)Image.FromFile("ground.bmp");
             breakable = (Bitmap)Image.FromFile("breakable.bmp");
             smiley = (Bitmap)Image.FromFile("smiley.bmp");
+            bombLeft = (Bitmap)Image.FromFile("bomb_left.bmp");
+            bombRight = (Bitmap)Image.FromFile("bomb_right.bmp");
             g = Graphics.FromImage(canvas);
             InitializeComponent();
         }        
@@ -60,6 +84,8 @@ namespace NeuralNetProject
                     return solid;
                 case 2:
                     return breakable;
+                case 3:
+                    return bombLeft;
                 default:
                     return ground;
             }

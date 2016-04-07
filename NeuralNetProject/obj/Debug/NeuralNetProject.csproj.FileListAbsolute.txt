@@ -14,9 +14,9 @@ D:\school\NeuralNetProject\NeuralNetProject\obj\Debug\NeuralNetProject.exe
 D:\school\NeuralNetProject\NeuralNetProject\obj\Debug\NeuralNetProject.pdb
 D:\school\NeuralNetProject\NeuralNetProject\bin\Debug\NeuralNetProject.exe
 D:\school\NeuralNetProject\NeuralNetProject\bin\Debug\NeuralNetProject.pdb
-D:\school\NeuralNetProject\NeuralNetProject\obj\Debug\NeuralNetProject.csprojResolveAssemblyReference.cache
 D:\school\NeuralNetProject\NeuralNetProject\obj\Debug\NeuralNetProject.Form1.resources
 D:\school\NeuralNetProject\NeuralNetProject\obj\Debug\NeuralNetProject.GameForm.resources
 D:\school\NeuralNetProject\NeuralNetProject\obj\Debug\NeuralNetProject.NewForm.resources
 D:\school\NeuralNetProject\NeuralNetProject\obj\Debug\NeuralNetProject.Properties.Resources.resources
 D:\school\NeuralNetProject\NeuralNetProject\obj\Debug\NeuralNetProject.csproj.GenerateResource.Cache
+D:\school\NeuralNetProject\NeuralNetProject\obj\Debug\NeuralNetProject.csprojResolveAssemblyReference.cache
