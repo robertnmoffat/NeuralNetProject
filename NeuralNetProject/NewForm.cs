@@ -60,9 +60,17 @@ namespace NeuralNetProject
             parent.CurrentNet = new NNet(inputs,rows,rowWidth,weightRange,weightAvg);
             parent.CurrentNet.initializeNet();
             parent.CurrentNet.WeightRange = weightRange;
-            parent.CurrentNet.randomizeNet((int)(weightRange * 100));
+            parent.CurrentNet.randomizeNet((int)(weightRange * 1000));
+            parent.CurrentNet.randomizeNet((int)(weightRange * 1000));
+            parent.CurrentNet.randomizeNet((int)(weightRange * 1000));
+            parent.CurrentNet.randomizeNet((int)(weightRange * 1000));
             parent.refreshImage();
             this.Dispose();
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -16,10 +16,60 @@ namespace NeuralNetProject
         Bitmap canvas = new Bitmap(722,482);
         Bitmap smiley, breakable, solid, ground, horiExp, vertExp, expLeft, expRight, expUp, expDown, bombLeft, bombRight;
         public int bestOffspring = -1;
+        public int speed = 1;
+        public bool resetMap = false;
+
+        private void fastToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            speed = 1;
+        }
+
+        private void slowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            speed = 0;
+        }
 
         private void toolStripMenuItem4_Click(object sender, EventArgs e)
         {
             bestOffspring = 2;
+        }
+
+        private void resetMapToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            resetMap = true;
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        public int getMovementReward() {
+            return (int)numericUpDown1.Value;
+        }
+
+        public int getWallHitPunish() {
+            return (int)numericUpDown2.Value;
+        }
+
+        public int getBombReward() {
+            return (int)numericUpDown3.Value;
+        }
+
+        public int getWallBreakReward() {
+            return (int)numericUpDown4.Value;
+        }
+
+        public int getTurningReward() {
+            return (int)numericUpDown5.Value;
+        }
+
+        public bool isInitialMap() {
+            return checkBox1.Checked;
+        }
+
+        public bool isStartBombs() {
+            return checkBox2.Checked;
         }
 
         private void toolStripMenuItem5_Click(object sender, EventArgs e)
@@ -38,7 +88,8 @@ namespace NeuralNetProject
         }
 
         public Bitmap currentTile;
-        Point[] smileyPositions = {new Point(1,1),new Point(1,9), new Point(15,1), new Point(15,9) };
+        public Point[] smileyPositions;
+        public int[] smileyScores = { 0, 0, 0, 0 };
         
         int[,] map;
 
@@ -51,6 +102,7 @@ namespace NeuralNetProject
             smiley = (Bitmap)Image.FromFile("smiley.bmp");
             bombLeft = (Bitmap)Image.FromFile("bomb_left.bmp");
             bombRight = (Bitmap)Image.FromFile("bomb_right.bmp");
+            horiExp = (Bitmap)Image.FromFile("explosion_horizontal.bmp");
             g = Graphics.FromImage(canvas);
             InitializeComponent();
         }        
@@ -73,6 +125,10 @@ namespace NeuralNetProject
                 }
             }
             pictureBox1.Image = canvas;
+            textBox1.Text = ""+smileyScores[0];
+            textBox2.Text = "" + smileyScores[1];
+            textBox3.Text = "" + smileyScores[2];
+            textBox4.Text = "" + smileyScores[3];
         }
 
 
@@ -86,6 +142,14 @@ namespace NeuralNetProject
                     return breakable;
                 case 3:
                     return bombLeft;
+                case 4:
+                    return bombRight;
+                case 5:
+                    return bombLeft;
+                case 6:
+                    return bombRight;
+                case 7:
+                    return horiExp;
                 default:
                     return ground;
             }
@@ -99,6 +163,12 @@ namespace NeuralNetProject
         public void updateSmileyPoint(int which, Point position) {
             smileyPositions[which].X = position.X;
             smileyPositions[which].Y = position.Y;
+        }
+
+        public void initializeSmileyPositions() {
+            for (int i=0; i<smileyPositions.Length; i++) {
+                smileyPositions[i] = new Point();
+            }
         }
     }
 }

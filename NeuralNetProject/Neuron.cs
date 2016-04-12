@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,8 +27,9 @@ namespace NeuralNetProject
         public void sum() {
             currentSum = 0.0;
             for (int i=0; i<inputWeights.Length; i++) {
-                currentSum += inputs[i].getSigmoidOutput() * inputWeights[i];
+                currentSum += inputs[i].currentSum * inputWeights[i];
             }
+            currentSum = getSigmoidOutput();
             currentSum += -1*threshold;
         }
 
@@ -50,17 +52,25 @@ namespace NeuralNetProject
         public void mutateWeights(double amount) {
             double mutation;
             for (int i=0; i<inputWeights.Length; i++) {
-                mutation = amount - amount / 2;                
-                mutation = Game.rand.Next(0,(int)amount);
+                int number = Game.rand.Next(0, 4);
+                if (number==3) {
+                    //Debug.Write("Weight before:"+inputWeights[i]);
+                    mutation = 0;
+                    mutation = Game.rand.Next(0, (int)amount+1);
+                    mutation -= amount / 2;
+                    mutation /= 100;
+                    inputWeights[i] -= mutation;
+                    //Debug.WriteLine(" Weight after:"+inputWeights[i]);
+                }
+            }
+            if (Game.rand.Next(0, 10) == 3)
+            {
+                mutation = 0;
+                mutation = Game.rand.Next(0, (int)amount+1);
                 mutation -= amount / 2;
                 mutation /= 100;
-                inputWeights[i] += mutation;
+                threshold += mutation;
             }
-            mutation = amount - amount / 2;
-            mutation = Game.rand.Next(0, (int)amount);
-            mutation -= amount / 2;
-            mutation /= 100;
-            threshold += mutation;
         }
 
         public double[] getWeights() {

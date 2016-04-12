@@ -10,9 +10,11 @@ namespace NeuralNetProject
     class Smiley
     {
         public Point position;
-        bool alive;
+        public bool alive=true;
         public NNet net;
         double[] memFlags = new double[4];
+        public int score = 0;
+        public int previousDirection = -1;
 
         public Smiley(NNet net, Point position) {
             this.net = net;
@@ -42,9 +44,6 @@ namespace NeuralNetProject
                     break;
             }
         }
-
-        public void giveNegativeFeedback() {
-
-        }
+                
     }
 }

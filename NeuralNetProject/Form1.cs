@@ -22,7 +22,7 @@ namespace NeuralNetProject
 
         public Form1()
         {
-            netDisplay = new Bitmap(688, 404);
+            netDisplay = new Bitmap(1388, 804);
             g = Graphics.FromImage(netDisplay);
             InitializeComponent();
         }
@@ -52,10 +52,11 @@ namespace NeuralNetProject
         }
 
         public void refreshImage() {
+            r = new Rectangle(0, 0, 20, 20);
             Point[] inputPoints = new Point[currentNet.InputWidth];
             Point[,] hiddenInputPoints = new Point[currentNet.rowWidth, currentNet.amountOfRows];
             int horiSpacing = 45;
-            int vertSpacing = 100;
+            int vertSpacing = 300;
             g.Clear(Color.White);
             p = new Pen(Color.Black);
             int centeringOffset = currentNet.InputWidth * horiSpacing / 2;
@@ -76,8 +77,16 @@ namespace NeuralNetProject
                     double[] currentWeights = currentNet.hiddenNeurons[x, y].getWeights();
                     for (int i=0; i<inputPoints.Length; i++) {
                         p.Width = (float)currentWeights[i]+1;
+                        //Debug.WriteLine(currentWeights[i]);
+                        if (currentWeights[i] < 0)
+                        {
+                            p.Color = Color.Red;
+                        }
+                        else {
+                            p.Color = Color.Green;
+                        }
                         //int darkness = (int)Math.Abs(255/Math.Round(currentWeights[i] * 100));
-                        Debug.WriteLine(currentWeights[i]);
+                        //Debug.WriteLine(currentWeights[i]);
                         g.DrawLine(p, inputPoints[i], new Point(r.X+10, r.Y+10));
                         p.Width = 1;
                     }
@@ -94,8 +103,15 @@ namespace NeuralNetProject
                 for (int j = 0; j < currentNet.rowWidth; j++)
                 {
                     p.Width = (float)currentWeights[j] + 1;
+                    if (currentWeights[i] < 0)
+                    {
+                        p.Color = Color.Red;
+                    }
+                    else {
+                        p.Color = Color.Green;
+                    }
                     //int darkness = (int)Math.Abs(255/Math.Round(currentWeights[i] * 100));
-                    Debug.WriteLine(currentWeights[j]);
+                    //Debug.WriteLine(currentWeights[j]);
                     g.DrawLine(p, hiddenInputPoints[j, currentNet.amountOfRows-1], new Point(r.X + 10, r.Y + 10));
                     p.Width = 1;
                 }

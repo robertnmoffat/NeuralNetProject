@@ -19,7 +19,9 @@ namespace NeuralNetProject
         private double[][] w;
         Neuron[] inputNeurons;
         public Neuron[,] hiddenNeurons;
-        public Neuron[] outputNeurons; 
+        public Neuron[] outputNeurons;
+
+        public int generation = 0;
 
         public NNet() {
         }
@@ -39,6 +41,99 @@ namespace NeuralNetProject
             this.weightAvg = weightAvg;
             
         }
+
+        public void givePositiveFeedback()
+        {
+            if (1 != 1)
+            {
+                for (int y = 0; y < amountOfRows; y++)
+                {
+                    for (int x = 0; x < rowWidth; x++)
+                    {
+                        if (hiddenNeurons[x, y].currentSum == 1)
+                        {
+                            for (int i = 0; i < hiddenNeurons[x, y].inputWeights.Length; i++)
+                            {
+                                if (hiddenNeurons[x, y].inputWeights[i] > 0)
+                                {
+                                    hiddenNeurons[x, y].inputWeights[i] += 0.001;
+                                }
+                                else {
+                                    hiddenNeurons[x, y].inputWeights[i] -= 0.001;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                return;
+
+                double highest = -9999;
+                int pos = 0;
+                for (int i = 0; i < outputCount; i++)
+                {
+                    if (outputNeurons[i].currentSum > highest)
+                    {
+                        highest = outputNeurons[i].currentSum;
+                        pos = i;
+                    }
+                }
+                for (int i = 0; i < rowWidth; i++)
+                {
+                    if (outputNeurons[pos].inputWeights[i] > 0)
+                        outputNeurons[pos].inputWeights[i] += 0.001;
+                    else
+                        outputNeurons[pos].inputWeights[i] -= 0.001;
+                }
+            }
+        }
+
+        public void giveNegativeFeedback()
+        {
+            if (1 != 1)
+            {
+                for (int y = 0; y < amountOfRows; y++)
+                {
+                    for (int x = 0; x < rowWidth; x++)
+                    {
+                        if (hiddenNeurons[x, y].currentSum == 1)
+                        {
+                            for (int i = 0; i < hiddenNeurons[x, y].inputWeights.Length; i++)
+                            {
+                                if (hiddenNeurons[x, y].inputWeights[i] > 0)
+                                {
+                                    hiddenNeurons[x, y].inputWeights[i] -= 0.01;
+                                }
+                                else {
+                                    hiddenNeurons[x, y].inputWeights[i] += 0.01;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                return;
+
+                double highest = -9999;
+                int pos = 0;
+                for (int i = 0; i < outputCount; i++)
+                {
+                    if (outputNeurons[i].currentSum > highest)
+                    {
+                        highest = outputNeurons[i].currentSum;
+                        pos = i;
+                    }
+                }
+                for (int i = 0; i < rowWidth; i++)
+                {
+                    if (outputNeurons[pos].inputWeights[i] > 0)
+                        outputNeurons[pos].inputWeights[i] -= 0.01;
+                    else
+                        outputNeurons[pos].inputWeights[i] += 0.01;
+                }
+            }
+        }
+
 
         public void initializeNet() {
             inputNeurons = new Neuron[inputWidth];
@@ -169,7 +264,8 @@ namespace NeuralNetProject
         public NNet copyNet() {
             NNet outputNet = new NNet(inputWidth,amountOfRows,rowWidth,WeightRange,weightAvg);
             outputNet.initializeNet();
-            double[] allWeights = new double[(inputWidth+1)*rowWidth+(rowWidth+1)*(amountOfRows-1)+(outputCount+1)*rowWidth];
+            double[] allWeights = new double[(inputWidth+1)*rowWidth+(rowWidth+1)*(amountOfRows-1)*rowWidth+(outputCount+1)*rowWidth];
+            //double[] allWeights = new double[amountOfRows*rowWidth+amountOfRows*rowWidth*rowWidth+];
             double[] tempWeights;
             int pos = 0;
 
@@ -194,6 +290,7 @@ namespace NeuralNetProject
             }
 
             outputNet.setWeights(allWeights);
+            outputNet.generation = generation+1;
             
             return outputNet;
         }
@@ -223,7 +320,7 @@ namespace NeuralNetProject
         public double[] getOutputs() {
             double[] output = new double[outputCount];
             for (int i = 0; i < outputCount; i++){
-                output[i] = outputNeurons[i].getSigmoidOutput();
+                output[i] = outputNeurons[i].currentSum;
             }
             return output;
         }
