@@ -44,7 +44,7 @@ namespace NeuralNetProject
 
         public void givePositiveFeedback()
         {
-            if (1 != 1)
+            if (1 == 1)
             {
                 for (int y = 0; y < amountOfRows; y++)
                 {
@@ -56,10 +56,12 @@ namespace NeuralNetProject
                             {
                                 if (hiddenNeurons[x, y].inputWeights[i] > 0)
                                 {
-                                    hiddenNeurons[x, y].inputWeights[i] += 0.001;
+                                    hiddenNeurons[x, y].inputWeights[i] += 0.0001;
+                                    //hiddenNeurons[x, y].inputWeights[i] += hiddenNeurons[x, y].inputWeights[i]* hiddenNeurons[x, y].inputWeights[i]/100;
                                 }
                                 else {
-                                    hiddenNeurons[x, y].inputWeights[i] -= 0.001;
+                                    //hiddenNeurons[x, y].inputWeights[i] -= hiddenNeurons[x, y].inputWeights[i]*hiddenNeurons[x, y].inputWeights[i]/100;
+                                    hiddenNeurons[x, y].inputWeights[i] -= 0.0001;
                                 }
                             }
                         }
@@ -81,9 +83,11 @@ namespace NeuralNetProject
                 for (int i = 0; i < rowWidth; i++)
                 {
                     if (outputNeurons[pos].inputWeights[i] > 0)
-                        outputNeurons[pos].inputWeights[i] += 0.001;
+                        outputNeurons[pos].inputWeights[i] += 0.0001;
+                        //outputNeurons[pos].inputWeights[i] += outputNeurons[pos].inputWeights[i] * outputNeurons[pos].inputWeights[i]/100;
                     else
-                        outputNeurons[pos].inputWeights[i] -= 0.001;
+                        outputNeurons[pos].inputWeights[i] -= 0.0001;
+                        //outputNeurons[pos].inputWeights[i] += outputNeurons[pos].inputWeights[i] * outputNeurons[pos].inputWeights[i]/100;
                 }
             }
         }

@@ -75,7 +75,7 @@ namespace NeuralNetProject
                     g.DrawEllipse(p, r);
 
                     double[] currentWeights = currentNet.hiddenNeurons[x, y].getWeights();
-                    for (int i=0; i<inputPoints.Length; i++) {
+                    for (int i=0; i< currentNet.hiddenNeurons[x, y].inputWeights.Length; i++) {
                         p.Width = (float)currentWeights[i]+1;
                         //Debug.WriteLine(currentWeights[i]);
                         if (currentWeights[i] < 0)
@@ -87,7 +87,13 @@ namespace NeuralNetProject
                         }
                         //int darkness = (int)Math.Abs(255/Math.Round(currentWeights[i] * 100));
                         //Debug.WriteLine(currentWeights[i]);
-                        g.DrawLine(p, inputPoints[i], new Point(r.X+10, r.Y+10));
+                        if (y == 0)
+                        {
+                            g.DrawLine(p, inputPoints[i], new Point(r.X + 10, r.Y + 10));
+                        }
+                        else {
+                            g.DrawLine(p, hiddenInputPoints[i,y-1], new Point(r.X + 10, r.Y + 10));
+                        }
                         p.Width = 1;
                     }
                 }
@@ -127,6 +133,11 @@ namespace NeuralNetProject
             currentNet = net;
             refreshImage();
             game.setSmileyNet(0, currentNet);
+        }
+
+        private void sideScrollerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Game2 game2 = new Game2(currentNet, this);
         }
     }
 }

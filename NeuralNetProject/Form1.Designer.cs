@@ -38,6 +38,7 @@
             this.gameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bomberDudeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.sideScrollerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -91,7 +92,8 @@
             // gameToolStripMenuItem
             // 
             this.gameToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.bomberDudeToolStripMenuItem});
+            this.bomberDudeToolStripMenuItem,
+            this.sideScrollerToolStripMenuItem});
             this.gameToolStripMenuItem.Name = "gameToolStripMenuItem";
             this.gameToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
             this.gameToolStripMenuItem.Text = "Game";
@@ -99,7 +101,7 @@
             // bomberDudeToolStripMenuItem
             // 
             this.bomberDudeToolStripMenuItem.Name = "bomberDudeToolStripMenuItem";
-            this.bomberDudeToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.bomberDudeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.bomberDudeToolStripMenuItem.Text = "BomberDude";
             this.bomberDudeToolStripMenuItem.Click += new System.EventHandler(this.bomberDudeToolStripMenuItem_Click);
             // 
@@ -110,6 +112,13 @@
             this.pictureBox1.Size = new System.Drawing.Size(1388, 804);
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
+            // 
+            // sideScrollerToolStripMenuItem
+            // 
+            this.sideScrollerToolStripMenuItem.Name = "sideScrollerToolStripMenuItem";
+            this.sideScrollerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.sideScrollerToolStripMenuItem.Text = "SideScroller";
+            this.sideScrollerToolStripMenuItem.Click += new System.EventHandler(this.sideScrollerToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -140,6 +149,7 @@
         private System.Windows.Forms.ToolStripMenuItem gameToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem bomberDudeToolStripMenuItem;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.ToolStripMenuItem sideScrollerToolStripMenuItem;
     }
 }
 

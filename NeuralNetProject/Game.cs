@@ -15,6 +15,7 @@ namespace NeuralNetProject
         Timer timer;
         GameForm gameform;
         public Smiley[] smileys;
+        int smileyAmount = 64;
         int[,] map;
         int[,] initialMap = {   { 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 },
          {1,0,0,0,2,2,2,2,2,2,2,2,2,0,0,0,1},
@@ -69,7 +70,7 @@ namespace NeuralNetProject
             timer.Interval = speed;
             timer.Tick += new EventHandler(timerEvent);
 
-            smileys = new Smiley[64];
+            smileys = new Smiley[smileyAmount];
 
             for (int i=0; i<smileys.Length; i++) {
                 smileys[i] = new Smiley(net.copyNet().randomizeNet((int)(net.weightRange * 100)), initialSmileyPoints[i%4]);
@@ -303,6 +304,7 @@ namespace NeuralNetProject
                 
                 Debug.WriteLine("("+ smileys[0].score + ","+smileys[1].score+","+smileys[2].score+","+smileys[3].score+")"+highestScore+", "+previousBestScore+" gen:"+smileys[highestSmiley].net.generation);
 
+                
                 if (highestScore > previousBestScore)
                 {
                     if (smileys[highestSmiley].alive == false)
@@ -319,6 +321,7 @@ namespace NeuralNetProject
                     previousBestScore = highestScore;
                 }
 
+                
 
                 for (int i = 0; i < smileys.Length; i++)
                 {
